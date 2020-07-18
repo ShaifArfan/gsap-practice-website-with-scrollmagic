@@ -369,3 +369,21 @@ body.hide {
 section{
   width: 80%;
 }
+* {
+  cursor: none!important;
+  }
+.cursor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.109);
+}
+.cursor::after{
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  /* transform: translate(50%, 50%); */
+
+}
