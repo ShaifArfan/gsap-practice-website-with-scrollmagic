@@ -113,6 +113,53 @@ function toggleNav(e) {
     cursor.style.zIndex = 1;
   }
 }
+
+// Barba Page Transition
+const logo = document.querySelector('#logo')
+barba.init({
+  views: [
+    {
+      namespace: 'home',
+      beforeEnter() {
+        animationSlide();
+        logo.href = './index.html';
+      },
+      beforeLeave() {
+        slideScene.destroy();
+        nextSlideScene.destroy();
+        controller.destroy();
+
+      }
+    },
+    {
+      namespace: 'fashion',
+      beforeEnter() {
+        logo.href = '../index.html';
+      },
+      beforeLeave() {
+
+      }
+    }
+  ],
+  transitions: [{
+    leave({ current, next }) {
+      let done = this.async();
+      const tl = gsap.timeline({ defaults: { ease: 'power2-inOut' } });
+      tl.fromTo(current.container, 1, { opacity: 1 }, { opacity: 0 });
+      tl.fromTo('.swipe', 1, { x: '-100%' }, { x: '0%', stagger: 0.2, onComplete: done })
+    },
+    enter({ current, next }) {
+      let done = this.async();
+      console.log('coming to the fashion page')
+      window.scrollTo(0, 0);
+      const tl = gsap.timeline({ defaults: { ease: 'power2-inOut' } });
+      tl.fromTo('.swipe', 1, { x: '0%' }, { x: '100%', stagger: 0.2, onComplete: done });
+      tl.fromTo(next.container, { opacity: 0 }, { opacity: 1 });
+    }
+  }]
+});
+
+
 // events
 window.addEventListener('mouseover', activeCursor)
 window.addEventListener('mousemove', cursorFn);
